@@ -6,8 +6,8 @@ from libs import auth_db, oi_db
 if __name__ == '__main__':
 
     host='oi.kumo.tokyo'
-    username = "123456789012345678"
-    password = "abcdefghijklmnopqrstuvqxyz1234567890ABCDEFG="
+    username = "123456789012345678"                            # DiscordIDを指定します
+    password = "abcdefghijklmnopqrstuvqxyz1234567890ABCDEFG="  # 管理人から提供されたパスワードを指定します
 
     # アクセス用のワンタイムパスワード生成（１日間有効）
     key = auth_db( host ).generate_key( username, password )
