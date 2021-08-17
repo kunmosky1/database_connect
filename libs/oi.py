@@ -8,11 +8,11 @@ from libs.database import database
 class oi_db:
 
     def __init__(self, host, key):
-        self._db = database( host= host, database='oi', username=key[0], password=key[1] )
+        self._db = database(host= host, database='oi', username=key[0], password=key[1])
 
-    def query_oi( self, exchange, period="1d" ):
+    def query_oi(self, exchange, period="1d"):
 
-        datas = self._db.query( f'select * from oi where time>now()-{period} and exchange=\'{exchange}\'', measurement='oi' )
+        datas = self._db.query(f'select * from oi where time>now()-{period} and exchange=\'{exchange}\'', measurement='oi')
         df = pd.DataFrame([(self._db.utcstr_to_dt(d['time']),d['open'],d['high'],d['low'],d['close'],
                             d['volume'],d['group'],d['usdbase'],d['btcbase']) for d in datas],
                           columns=["date","open","high","low","close","volume","group","usdbase","btcbase"]
@@ -20,5 +20,5 @@ class oi_db:
 
         return df
 
-    def query_exchanges( self ):
+    def query_exchanges(self):
         return [e['value'] for e in self._db.query('show tag values from "oi" with key="exchange"')]
