@@ -10,7 +10,7 @@ if __name__ == '__main__':
     username = "123456789012345678"                            # DiscordIDを記載します
     password = "abcdefghijklmnopqrstuvqxyz1234567890ABCDEFG="  # 管理人から提供されたパスワードを記載します
 
-    # アクセス用のワンタイムパスワード生成（１日間有効）
+    # アクセス用のワンタイムパスワード生成（6時間有効）
     key = auth_db( host ).generate_key( username, password )
 
     # DB接続
