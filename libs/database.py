@@ -20,7 +20,7 @@ class database:
     def query(self, query, measurement=None):
         self.__access_time.append(time.time())
         if len(self.__access_time)==5 :
-            sleep_time = time.time()-60-self.__access_time.popleft()
+            sleep_time = self.__access_time.popleft()+60-time.time()
             if sleep_time>0 :
                 time.sleep(sleep_time)
         result = self._client.query(query)
