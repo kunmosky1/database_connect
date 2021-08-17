@@ -15,12 +15,12 @@ class database:
     def __init__(self, host, database='auth', username='bfsx2', password='user'):
         urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
         self._client = InfluxDBClient(host=host, port=8085, database=database, timeout=5, ssl=True, username=username, password=password)
-        self.__access_time = deque(maxlen=5)
+        self.__access_time = deque(maxlen=30)
 
     def query(self, query, measurement=None):
         self.__access_time.append(time.time())
-        if len(self.__access_time)==5 :
-            sleep_time = self.__access_time.popleft()+60-time.time()
+        if len(self.__access_time)==30 :
+            sleep_time = self.__access_time.popleft()+180-time.time()
             if sleep_time>0 :
                 time.sleep(sleep_time)
         result = self._client.query(query)
