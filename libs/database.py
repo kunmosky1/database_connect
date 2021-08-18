@@ -12,9 +12,9 @@ import time
 import urllib3
 
 class database:
-    def __init__(self, host, database='auth', username='bfsx2', password='user'):
+    def __init__(self, host, database='auth', username='bfsx2', password='user', timeout=5):
         urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-        self._client = InfluxDBClient(host=host, port=8085, database=database, timeout=5, ssl=True, username=username, password=password)
+        self._client = InfluxDBClient(host=host, port=8085, database=database, timeout=timeout, ssl=True, username=username, password=password)
         self.__access_time = deque(maxlen=30)
 
     def query(self, query, measurement=None):

@@ -8,7 +8,7 @@ from libs.database import database
 class candle_db:
 
     def __init__(self, host, key):
-        self._db = database( host= host, database='candles', username=key[0], password=key[1] )
+        self._db = database( host= host, database='candles', username=key[0], password=key[1], timeout=30 )
 
     def query_candles( self, exchange, symbol, timescale=1, num_of_candle=2000 ):
 
