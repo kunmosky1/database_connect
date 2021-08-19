@@ -28,13 +28,15 @@ class candle_db:
         if timescale == 0:
             return df
 
-        df = df.resample(f'{resolution}s').agg(
-                          {'open': 'first', 'high': 'max', 'low': 'min', 'close': 'last', 'volume': 'sum', 'buy_volume': 'sum', 'sell_volume': 'sum',
-                           'count': 'sum', 'buy_count': 'sum', 'sell_count': 'sum', 'value': 'sum', 'buy_value': 'sum', 'sell_value': 'sum'})            
         df['close'] = df['close'].fillna(method='ffill')
         df['open'] = df['open'].fillna(df['close'])
         df['high'] = df['high'].fillna(df['close'])
         df['low'] = df['low'].fillna(df['close'])
+
+        df = df.resample(f'{resolution}s').agg(
+                          {'open': 'first', 'high': 'max', 'low': 'min', 'close': 'last', 'volume': 'sum', 'buy_volume': 'sum', 'sell_volume': 'sum',
+                           'count': 'sum', 'buy_count': 'sum', 'sell_count': 'sum', 'value': 'sum', 'buy_value': 'sum', 'sell_value': 'sum'})            
+
         return df.tail(num_of_candle)
 
     def query_exchanges( self ):
