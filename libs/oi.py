@@ -7,8 +7,8 @@ from libs.database import database
 
 class oi_db:
 
-    def __init__(self, host, key):
-        self._db = database(host= host, database='oi', username=key[0], password=key[1], timeout=10)
+    def __init__(self, host, key, db='oi'):
+        self._db = database(host= host, database=db, username=key[0], password=key[1], timeout=10)
 
     def query_oi(self, exchange, period="1d"):
 
