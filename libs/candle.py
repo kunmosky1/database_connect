@@ -7,8 +7,8 @@ from libs.database import database
 
 class candle_db:
 
-    def __init__(self, host, key):
-        self._db = database( host= host, database='candles', username=key[0], password=key[1], timeout=30 )
+    def __init__(self, host, key, db='candles'):
+        self._db = database( host= host, database=db, username=key[0], password=key[1], timeout=30 )
 
     def query_candles( self, exchange, symbol, timescale=1, num_of_candle=2000 ):
 
@@ -28,14 +28,21 @@ class candle_db:
         if timescale == 0:
             return df
 
+        df = df.resample(f'1s').agg(
+                          {'open': 'first', 'high': 'max', 'low': 'min', 'close': 'last', 'volume': 'sum', 'buy_volume': 'sum', 'sell_volume': 'sum',
+                           'count': 'sum', 'buy_count': 'sum', 'sell_count': 'sum', 'value': 'sum', 'buy_value': 'sum', 'sell_value': 'sum'})
+
         df['close'] = df['close'].fillna(method='ffill')
         df['open'] = df['open'].fillna(df['close'])
         df['high'] = df['high'].fillna(df['close'])
         df['low'] = df['low'].fillna(df['close'])
 
+        if timescale == 1:
+            return df.tail(num_of_candle)
+
         df = df.resample(f'{resolution}s').agg(
                           {'open': 'first', 'high': 'max', 'low': 'min', 'close': 'last', 'volume': 'sum', 'buy_volume': 'sum', 'sell_volume': 'sum',
-                           'count': 'sum', 'buy_count': 'sum', 'sell_count': 'sum', 'value': 'sum', 'buy_value': 'sum', 'sell_value': 'sum'})            
+                           'count': 'sum', 'buy_count': 'sum', 'sell_count': 'sum', 'value': 'sum', 'buy_value': 'sum', 'sell_value': 'sum'})
 
         return df.tail(num_of_candle)
 
