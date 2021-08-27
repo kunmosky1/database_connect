@@ -11,7 +11,7 @@ from influxdb import InfluxDBClient
 import time
 import urllib3
 
-class database:
+class db_server:
     def __init__(self, host, database='auth', username='bfsx2', password='user', timeout=5):
         urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
         self._client = InfluxDBClient(host=host, port=8085, database=database, timeout=timeout, ssl=True, username=username, password=password)
@@ -36,7 +36,7 @@ class database:
             d = (parser.parse(date_line) + timedelta(hours=9)).replace(tzinfo=None)
         return d
 
-class auth_db(database):
+class auth_db(db_server):
  
     def generate_key(self, username, password):
         self.__hash_code = hmac.new(username.encode('utf-8'), password.encode('utf-8'), sha256).hexdigest()

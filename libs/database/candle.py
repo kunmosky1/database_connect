@@ -3,12 +3,12 @@
 
 from datetime import timedelta,timezone
 import pandas as pd
-from libs.database import database
+from libs.database.db_server import db_server
 
 class candle_db:
 
     def __init__(self, host, key, db='candles'):
-        self._db = database( host= host, database=db, username=key[0], password=key[1], timeout=30 )
+        self._db = db_server( host= host, database=db, username=key[0], password=key[1], timeout=30 )
 
     def query_candles( self, exchange, symbol, timescale=1, num_of_candle=2000 ):
 

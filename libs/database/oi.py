@@ -3,12 +3,12 @@
 
 from datetime import timedelta,timezone
 import pandas as pd
-from libs.database import database
+from libs.database.db_server import db_server
 
 class oi_db:
 
     def __init__(self, host, key, db='oi'):
-        self._db = database(host= host, database=db, username=key[0], password=key[1], timeout=10)
+        self._db = db_server(host= host, database=db, username=key[0], password=key[1], timeout=10)
 
     def query_oi(self, exchange, period="1d"):
 

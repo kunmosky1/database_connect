@@ -1,7 +1,7 @@
 # coding: utf-8
 #!/usr/bin/python3
 
-from libs import auth_db, oi_db
+from libs.database import auth_db, oi_db
 
 if __name__ == '__main__':
 
